@@ -1,11 +1,13 @@
 let nombreCliente = prompt("ingrese el nombre")
 let apellidoCliente = prompt("ingrese el apellido")
 
-if ((nombreCliente != "") && (apellidoCliente != "")){
+function bienvenido (nombreCliente, apellidoCliente) {
     alert("Bienvenido "+ nombreCliente + " " + apellidoCliente)
-} else {
-    alert("Ingresa tus datos correctamente")
 }
+
+bienvenido(nombreCliente, apellidoCliente)
+
+
 
 let producto = prompt("Que producto te gusto 1: producto 1, 2: producto 2, 3: producto 3, ESC para salir")
 
