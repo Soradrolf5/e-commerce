@@ -7,9 +7,19 @@ function bienvenido (nombreCliente, apellidoCliente) {
 
 bienvenido(nombreCliente, apellidoCliente)
 
+function Perfume (nombre, precio) {
+    this.nombre = nombre;
+    this.precio = precio;
+    this.disponible = true; 
+}
 
+const perfume1 = new Perfume ("Wonderstruck Enchanted", 6500)
+const perfume2 = new Perfume ("Wonderstruck", 8500)
+const perfume3 = new Perfume ("Incredible Things", 9500)
 
-let producto = prompt("Que producto te gusto 1: producto 1, 2: producto 2, 3: producto 3, ESC para salir")
+alert("tenemos estos productos: " + perfume1.nombre + ", " + perfume2.nombre + ", " + perfume3.nombre)
+
+let producto = prompt("Que perfume te gusto 1: Wonderstruck Enchanted, 2: Wonderstruck, 3: Incredible Things, ESC para salir")
 
 let precio1 = 6500
 let precio2 = 8500
@@ -37,3 +47,13 @@ producto = prompt("Que producto te gusto 1: producto 1, 2: producto 2, 3: produc
 }
 
 
+let carrito = []
+let cantidad = 3
+
+do {
+    let entrada = prompt("ingrese que perfume quiere comprar: 1: Wonderstruck Enchanted, 2: Wonderstruck o 3: Incredible Things ")
+    carrito.push(entrada.toUpperCase())
+    console.log(carrito.length)
+}while(carrito.length != cantidad)
+
+alert(carrito)
