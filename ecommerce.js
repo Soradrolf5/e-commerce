@@ -1,4 +1,92 @@
-let nombreCliente = prompt("ingrese el nombre")
+
+const cards = document.querySelectorAll(".card")
+
+cards.forEach((card)=>{
+    card.addEventListener ("click", (e)=>{
+        datosProducto(e.target.parentElement)
+    })
+})
+
+//carrito
+let perfumeCompra= []
+
+
+function datosProducto(producto){
+    const perfumes ={
+        titulo:producto.querySelector(".card-title").textContent,
+    }
+
+    perfumeCompra=[...perfumeCompra, perfumes]
+
+perfumesHTML()
+}
+
+
+const perfumesCarrito =document.querySelector(".perfumesCarrito")
+
+function btnEliminar(producto){
+    let borrar = perfumeCompra.find((producto) => producto.titulo === producto)
+    let indice = perfumeCompra.indexOf(borrar)
+    perfumeCompra.splice(indice, 1)
+    
+    }
+
+    function perfumesHTML(){
+        limpiarHTML()
+
+    perfumeCompra.forEach((producto)=>{
+        const row = document.createElement("p")
+        row.innerHTML=`
+        <div class="container">
+        <h5>${producto.titulo}</h5>
+        
+        <button class="btn btn-danger" id="eliminar" onclick="btnEliminar(producto)">Eliminar</button>
+        </div>
+        `
+        
+
+        
+        perfumesCarrito.appendChild(row)
+    })
+}
+        
+        function limpiarHTML(){
+    perfumesCarrito.innerHTML=""
+}
+
+
+
+let nombreForm = document.querySelector("#nombre")
+let apellidoForm = document.querySelector("#apellido")
+let ciudadForm = document.querySelector ("#ciudad")
+
+
+let formulario = document.querySelector("#formulario")
+
+let datos =document.querySelector(".datosComprador")
+
+//mostrar formulario en dom
+
+const mostrarForm = formulario.addEventListener ("submit", function(e){
+    e.preventDefault()
+    datos.innerHTML = `
+    <div class= "alert alert-warning" role="alert">
+    <h5> Muchas Gracias ${nombreForm.value} ${apellidoForm.value} por tu compra te llegara a la brevedad a ${ciudadForm.value} </h5>
+    </div>
+    `
+})
+
+
+//A JSON CARRITO
+const aJson = JSON.stringify(perfumeCompra)
+localStorage.setItem("perfumes", aJson)
+const perfumesArray = JSON.parse(localStorage.getItem("perfumes"))
+perfumesArray.push(perfumesCarrito)
+localStorage.setItem("perfumes", JSON.stringify(perfumesArray))
+
+console.log(aJson)
+
+/*let nombreCliente = prompt("ingrese el nombre")
 let apellidoCliente = prompt("ingrese el apellido")
 
 function bienvenido (nombreCliente, apellidoCliente) {
@@ -56,4 +144,4 @@ do {
     console.log(carrito.length)
 }while(carrito.length != cantidad)
 
-alert(carrito)
+alert(carrito)*/
