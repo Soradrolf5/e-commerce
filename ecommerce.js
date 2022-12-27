@@ -1,64 +1,99 @@
 
-const cards = document.querySelectorAll(".card")
-
-cards.forEach((card)=>{
-    card.addEventListener ("click", (e)=>{
-        datosProducto(e.target.parentElement)
-    })
-})
-
-//carrito
-let perfumeCompra= []
-
-
-function datosProducto(producto){
-    const perfumes ={
-        titulo:producto.querySelector(".card-title").textContent,
+class Perfume {
+    constructor(id, nombre, precio, cantidad) {
+    this.id = id;
+    this.nombre = nombre;
+    this.precio = precio;
+    this.cantidad = cantidad;
     }
-
-    perfumeCompra=[...perfumeCompra, perfumes]
-
-perfumesHTML()
 }
 
+const perfume1 = new Perfume(1, 'Wonderstruck', 5000, 1);
+const perfume2 = new Perfume(2, 'Wonderstruck Enchanted', 6000, 1);
+const perfume3 = new Perfume(3, 'Incredible Things', 7000, 1);
 
-const perfumesCarrito =document.querySelector(".perfumesCarrito")
+const perfumes = [perfume1, perfume2, perfume3];
 
-function btnEliminar(producto){
-    let borrar = perfumeCompra.find((producto) => producto.titulo === producto)
-    let indice = perfumeCompra.indexOf(borrar)
-    perfumeCompra.splice(indice, 1)
-    
+const contenedorPerfumes = document.getElementById('contenedorPerfumes');
+
+//muestra productos en DOM
+perfumes.forEach((producto) => {
+    const divProducto = document.createElement('div');
+    divProducto.classList.add('card', 'col-xl-3', 'col-md-6', 'col-sm-12');
+    divProducto.innerHTML = `
+                            <div>
+                                <div class="card-body">
+                                    <h3 class="card-title"> ${producto.nombre} </h3>
+                                    <p class="card-text"> ${producto.precio} </p>
+                                    <button id="boton${producto.id}" class="btn btn-danger"> Agregar al Carrito </button>
+                                </div>
+                            </div>`;
+    contenedorPerfumes.appendChild(divProducto);
+
+//boton agregar carrito
+    const boton = document.getElementById(`boton${producto.id}`);
+    boton.addEventListener('click', () => {
+    agregarAlCarrito(producto.id);
+    });
+});
+
+
+const carritoPerfumes = [];
+
+//cantidad de productos en carrito
+const agregarAlCarrito = (id) => {
+    const producto = perfumes.find((producto) => producto.id === id);
+    const perfumeEnCarrito = carritoPerfumes.find((producto) => producto.id === id);
+    if (perfumeEnCarrito) {
+    perfumeEnCarrito.cantidad++;
+    } else {
+    carritoPerfumes.push(producto);
     }
+    actualizarCarrito();
+};
 
-    function perfumesHTML(){
-        limpiarHTML()
+// carrito en DOM
+const contenedorCarrito = document.getElementById('contenedorCarrito');
+const carrito = document.getElementById('carrito');
 
-    perfumeCompra.forEach((producto)=>{
-        const row = document.createElement("p")
-        row.innerHTML=`
-        <div class="container">
-        <h5>${producto.titulo}</h5>
-        
-        <button class="btn btn-danger" id="eliminar" onclick="btnEliminar(producto)">Eliminar</button>
-        </div>
-        `
-        
+carrito.addEventListener('click', actualizarCarrito);
 
-        
-        perfumesCarrito.appendChild(row)
-    })
+function actualizarCarrito() {
+let aux = '';
+carritoPerfumes.forEach((producto) => {
+    aux += `
+        <div class="card col-xl-3 col-md-6 col-sm-12">
+                <div class="card-body">
+                    <h3 class="card-title"> ${producto.nombre} </h3>
+                    <p class="card-text"> ${producto.precio} </p>
+                    <button onClick = "eliminarCarrito(${producto.id})" class="btn btn-primary"> Eliminar del Carrito </button>
+                </div>
+            </div>
+            `;
+});
+
+contenedorCarrito.innerHTML = aux;
+calcularTotalCompra();
 }
-        
-        function limpiarHTML(){
-    perfumesCarrito.innerHTML=""
-}
 
+// boton eliminar de carrito
+const eliminarCarrito = (id) => {
+    const producto = carritoPerfumes.find((producto) => producto.id === id);
+    carritoPerfumes.splice(carritoPerfumes.indexOf(producto), 1);
+    actualizarCarrito();
+};
 
+  //calcula total en carrito
+const totalCompra = document.getElementById('totalCompra');
 
-let nombreForm = document.querySelector("#nombre")
-let apellidoForm = document.querySelector("#apellido")
-let ciudadForm = document.querySelector ("#ciudad")
+const calcularTotalCompra = () => {
+let total = 0;
+carritoPerfumes.forEach((producto) => {
+    total += producto.precio * producto.cantidad;
+});
+totalCompra.innerHTML = total;
+};
+
 
 
 let formulario = document.querySelector("#formulario")
@@ -66,82 +101,22 @@ let formulario = document.querySelector("#formulario")
 let datos =document.querySelector(".datosComprador")
 
 //mostrar formulario en dom
+const mostrarForm = formulario.addEventListener("submit", function (e) {
+    let nombreForm = document.querySelector("#nombre").value
+    let apellidoForm = document.querySelector("#apellido").value
+    let ciudadForm = document.querySelector("#ciudad").value
 
-const mostrarForm = formulario.addEventListener ("submit", function(e){
     e.preventDefault()
     datos.innerHTML = `
     <div class= "alert alert-warning" role="alert">
-    <h5> Muchas Gracias ${nombreForm.value} ${apellidoForm.value} por tu compra te llegara a la brevedad a ${ciudadForm.value} </h5>
+    <h5> Muchas Gracias ${nombreForm} ${apellidoForm} por tu compra te llegara a la brevedad a ${ciudadForm} </h5>
     </div>
     `
 })
 
 
+
 //A JSON CARRITO
-const aJson = JSON.stringify(perfumeCompra)
-localStorage.setItem("perfumes", aJson)
-const perfumesArray = JSON.parse(localStorage.getItem("perfumes"))
-perfumesArray.push(perfumesCarrito)
-localStorage.setItem("perfumes", JSON.stringify(perfumesArray))
+const aJson = JSON.stringify(perfumes)
+localStorage.setItem("Perfumes", aJson)
 
-console.log(aJson)
-
-/*let nombreCliente = prompt("ingrese el nombre")
-let apellidoCliente = prompt("ingrese el apellido")
-
-function bienvenido (nombreCliente, apellidoCliente) {
-    alert("Bienvenido "+ nombreCliente + " " + apellidoCliente)
-}
-
-bienvenido(nombreCliente, apellidoCliente)
-
-function Perfume (nombre, precio) {
-    this.nombre = nombre;
-    this.precio = precio;
-    this.disponible = true; 
-}
-
-const perfume1 = new Perfume ("Wonderstruck Enchanted", 6500)
-const perfume2 = new Perfume ("Wonderstruck", 8500)
-const perfume3 = new Perfume ("Incredible Things", 9500)
-
-alert("tenemos estos productos: " + perfume1.nombre + ", " + perfume2.nombre + ", " + perfume3.nombre)
-
-let producto = prompt("Que perfume te gusto 1: Wonderstruck Enchanted, 2: Wonderstruck, 3: Incredible Things, ESC para salir")
-
-let precio1 = 6500
-let precio2 = 8500
-let precio3 = 9000
-
-while (producto != "ESC"){
-if (producto === "1"){
-    for (let i = 1; i <= 6; i++) {
-        let resultado = precio1 / i
-        alert("PAGOS: " + precio1 + " en " + i + " cuotas de = " + resultado)
-        
-    }
-}else if (producto === "2"){
-    for (let i = 1; i <= 6; i++) {
-        let resultado = precio2 / i
-        alert("PAGOS: " + precio2 + " en " + i + " cuotas de = " + resultado)
-}
-} else if (producto === "3"){
-    for (let i = 1; i <= 6; i++) {
-        let resultado = precio3 / i
-        alert("PAGOS: " + precio3 + " en " + i + " cuotas de = " + resultado)
-}
-}
-producto = prompt("Que producto te gusto 1: producto 1, 2: producto 2, 3: producto 3, ESC para salir")
-}
-
-
-let carrito = []
-let cantidad = 3
-
-do {
-    let entrada = prompt("ingrese que perfume quiere comprar: 1: Wonderstruck Enchanted, 2: Wonderstruck o 3: Incredible Things ")
-    carrito.push(entrada.toUpperCase())
-    console.log(carrito.length)
-}while(carrito.length != cantidad)
-
-alert(carrito)*/
