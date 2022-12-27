@@ -1,0 +1,4 @@
+[ {"id":1, "nombre": "Wonderstruck", "precio": 5000, "cantidad": 1  },
+{"id":2, "nombre": "Wonderstruck Enchanted", "precio": 6000, "cantidad": 1  },
+{"id":3, "nombre": "Incredible Things", "precio": 7000, "cantidad": 1  }
+]
