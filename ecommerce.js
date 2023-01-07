@@ -40,7 +40,7 @@ perfumes.forEach((producto) => {
 
 const carritoPerfumes = [];
 
-//cantidad de productos en carrito
+//cantidad de productos en carrito y los guarda en localStorage
 const agregarAlCarrito = (id) => {
     const producto = perfumes.find((producto) => producto.id === id);
     const perfumeEnCarrito = carritoPerfumes.find((producto) => producto.id === id);
@@ -50,6 +50,8 @@ const agregarAlCarrito = (id) => {
     carritoPerfumes.push(producto);
     }
     actualizarCarrito();
+    const aJson = JSON.stringify(perfumes)
+    localStorage.setItem("Perfumes", aJson)
 };
 
 // carrito en DOM
@@ -114,9 +116,12 @@ const mostrarForm = formulario.addEventListener("submit", function (e) {
     `
 })
 
+//funcion borrar carrito al comprar
+const vaciarCarrito = document.getElementById('comprar');
+vaciarCarrito.addEventListener('click', () => {
+carritoPerfumes.splice(0, carritoPerfumes.length);
+actualizarCarrito();
+});
 
 
-//A JSON CARRITO
-const aJson = JSON.stringify(perfumes)
-localStorage.setItem("Perfumes", aJson)
 
