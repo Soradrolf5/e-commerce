@@ -119,8 +119,17 @@ const mostrarForm = formulario.addEventListener("submit", function (e) {
 //funcion borrar carrito al comprar
 const vaciarCarrito = document.getElementById('comprar');
 vaciarCarrito.addEventListener('click', () => {
+    Swal.fire({
+        position: 'top-end',
+        icon: 'success',
+        title: 'Tu compra fue exitosa',
+        showConfirmButton: false,
+        timer: 1500
+})
+
 carritoPerfumes.splice(0, carritoPerfumes.length);
 actualizarCarrito();
+
 });
 
 
