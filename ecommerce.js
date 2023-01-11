@@ -1,5 +1,5 @@
 
-class Perfume {
+/*class Perfume {
     constructor(id, nombre, precio, cantidad) {
     this.id = id;
     this.nombre = nombre;
@@ -12,12 +12,15 @@ const perfume1 = new Perfume(1, 'Wonderstruck', 5000, 1);
 const perfume2 = new Perfume(2, 'Wonderstruck Enchanted', 6000, 1);
 const perfume3 = new Perfume(3, 'Incredible Things', 7000, 1);
 
-const perfumes = [perfume1, perfume2, perfume3];
+const perfumes = [perfume1, perfume2, perfume3];*/
 
 const contenedorPerfumes = document.getElementById('contenedorPerfumes');
 
-//muestra productos en DOM
-perfumes.forEach((producto) => {
+//trae productos de json y muestra productos en DOM
+fetch("./data.json")
+.then((resp)=>resp.json())
+.then((data)=>{
+data.forEach((producto) => {
     const divProducto = document.createElement('div');
     divProducto.classList.add('card', 'col-xl-3', 'col-md-6', 'col-sm-12');
     divProducto.innerHTML = `
@@ -36,13 +39,13 @@ perfumes.forEach((producto) => {
     agregarAlCarrito(producto.id);
     });
 });
-
+})
 
 const carritoPerfumes = [];
 
 //cantidad de productos en carrito y los guarda en localStorage
 const agregarAlCarrito = (id) => {
-    const producto = perfumes.find((producto) => producto.id === id);
+    const producto = data.find((producto) => producto.id === id);
     const perfumeEnCarrito = carritoPerfumes.find((producto) => producto.id === id);
     if (perfumeEnCarrito) {
     perfumeEnCarrito.cantidad++;
@@ -50,7 +53,7 @@ const agregarAlCarrito = (id) => {
     carritoPerfumes.push(producto);
     }
     actualizarCarrito();
-    const aJson = JSON.stringify(perfumes)
+    const aJson = JSON.stringify(data)
     localStorage.setItem("Perfumes", aJson)
 };
 
@@ -132,5 +135,25 @@ actualizarCarrito();
 
 });
 
+/*
+const lista = document.querySelector("#listado")
 
+fetch("/data.json")
+.then((resp)=>resp.json())
+.then((data)=>{
+    data.forEach((producto)=>{
+        const li = document.createElement("li")
+        li.innerHTML='
+        <h4>${producto.nombre}</h4>
+        <h4>${producto.precio}</h4>
+        '
+        lista.append(li)
+    })
+})
+
+crear card de productos con esto
+
+
+
+*/ 
 
