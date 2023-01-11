@@ -45,9 +45,7 @@ const carritoPerfumes = [];
 
 // carrito en DOM
 const contenedorCarrito = document.getElementById('contenedorCarrito');
-const carrito = document.getElementById('carrito');
 
-carrito.addEventListener('click', actualizarCarrito);
 
 function actualizarCarrito() {
 let aux = '';
@@ -105,6 +103,7 @@ const mostrarForm = formulario.addEventListener("submit", function (e) {
     `
 })
 
+
 //funcion borrar carrito al comprar
 const vaciarCarrito = document.getElementById('comprar');
 vaciarCarrito.addEventListener('click', () => {
@@ -119,7 +118,8 @@ vaciarCarrito.addEventListener('click', () => {
 carritoPerfumes.splice(0, carritoPerfumes.length);
 actualizarCarrito();
 
-});
+window.localStorage.clear()
 
+});
 
 
