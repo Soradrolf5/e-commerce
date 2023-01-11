@@ -33,7 +33,8 @@ const agregarAlCarrito = (id) => {
     carritoPerfumes.push(producto);
     }
     actualizarCarrito();
-    const aJson = JSON.stringify(data)
+
+    const aJson = JSON.stringify(carritoPerfumes)
     localStorage.setItem("Perfumes", aJson)
 };
 });
