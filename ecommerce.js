@@ -1,19 +1,4 @@
 
-/*class Perfume {
-    constructor(id, nombre, precio, cantidad) {
-    this.id = id;
-    this.nombre = nombre;
-    this.precio = precio;
-    this.cantidad = cantidad;
-    }
-}
-
-const perfume1 = new Perfume(1, 'Wonderstruck', 5000, 1);
-const perfume2 = new Perfume(2, 'Wonderstruck Enchanted', 6000, 1);
-const perfume3 = new Perfume(3, 'Incredible Things', 7000, 1);
-
-const perfumes = [perfume1, perfume2, perfume3];*/
-
 const contenedorPerfumes = document.getElementById('contenedorPerfumes');
 
 //trae productos de json y muestra productos en DOM
@@ -136,25 +121,5 @@ actualizarCarrito();
 
 });
 
-/*
-const lista = document.querySelector("#listado")
 
-fetch("/data.json")
-.then((resp)=>resp.json())
-.then((data)=>{
-    data.forEach((producto)=>{
-        const li = document.createElement("li")
-        li.innerHTML='
-        <h4>${producto.nombre}</h4>
-        <h4>${producto.precio}</h4>
-        '
-        lista.append(li)
-    })
-})
-
-crear card de productos con esto
-
-
-
-*/ 
 
